@@ -1,4 +1,5 @@
 
+using Desafio.Api.Config;
 using Desafio.Api.Data;
 using Desafio.Api.Interfaces;
 using Desafio.Api.Repositories;
@@ -29,6 +30,11 @@ namespace Desafio.Api
             builder.Services.AddScoped<IRepositoryProduct, RepositoryProduct>();
             builder.Services.AddScoped<IRepositoryCategory, RepositoryCategory>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddScoped(provider => new AutoMapper.MapperConfiguration(config =>
+            {
+                config.AddProfile<AutoMapperConfig>();
+            }).CreateMapper());
 
             var app = builder.Build();
 
