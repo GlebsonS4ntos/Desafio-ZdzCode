@@ -1,5 +1,7 @@
 
 using Desafio.Api.Data;
+using Desafio.Api.Interfaces;
+using Desafio.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Desafio.Api
@@ -23,6 +25,10 @@ namespace Desafio.Api
             {
                 opt.UseSqlite(connectionString);
             });
+
+            builder.Services.AddScoped<IRepositoryProduct, RepositoryProduct>();
+            builder.Services.AddScoped<IRepositoryCategory, RepositoryCategory>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 
