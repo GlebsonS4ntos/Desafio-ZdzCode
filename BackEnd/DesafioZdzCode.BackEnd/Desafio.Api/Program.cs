@@ -1,4 +1,7 @@
 
+using Desafio.Api.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Desafio.Api
 {
     public class Program
@@ -13,6 +16,13 @@ namespace Desafio.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            var connectionString = builder.Configuration.GetConnectionString("Sqlite");
+
+            builder.Services.AddDbContext<DesafioContext>(opt =>
+            {
+                opt.UseSqlite(connectionString);
+            });
 
             var app = builder.Build();
 
