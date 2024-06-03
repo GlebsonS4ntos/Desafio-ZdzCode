@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Produtos</h1>
+    
   </div>
 </template>
 
@@ -10,4 +10,4 @@
 
 <style>
 
-</style>s
+</style>

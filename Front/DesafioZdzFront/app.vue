@@ -3,3 +3,7 @@
     <NuxtPage/>
   </NuxtLayout>
 </template>
+
+<script></script>
+
+<style></style>

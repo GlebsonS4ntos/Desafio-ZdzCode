@@ -1,6 +1,6 @@
 <template>
     <v-app dark="true">
-        <v-navigation-drawer v-model="drawer" :clipped="clipped" temporary :location="bottom">
+        <v-navigation-drawer v-model="drawer" :clipped="clipped" temporary location="left">
             <v-list>
                 <v-list-item v-for="(item, i) in items" :key="i" :value="item" color="primary" :to="item.to" exact>
                     <template v-slot:prepend>
@@ -56,6 +56,8 @@ export default {
         goHome() {
             this.$router.push('/')
         }
-    },
+    }
 }
 </script>
+
+<style></style>
