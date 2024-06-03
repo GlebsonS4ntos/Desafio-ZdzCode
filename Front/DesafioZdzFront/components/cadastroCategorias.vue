@@ -4,7 +4,7 @@
       <v-card prepend-icon="mdi-ballot-outline" title="Adicionar Categoria">
         <v-card-text>
           <form>
-            <v-text-field label="Nome *" v-model="categoria.name" error-messages="O nome deve ter 2 ou mais caracteres"></v-text-field>
+            <v-text-field label="Nome *" v-model="categoria.name" :rules="name"></v-text-field>
             <v-select :items="items" label="Categoria Pai" density="comfortable" v-model="categoria.partentCategoryId"
               item-value="id" item-title="name" clearable></v-select>
           </form>
@@ -35,6 +35,13 @@ const isValid = () => {
   }
   return true;
 };
+
+const name = [
+        value => {
+          if (name.length > 2) return true
+          return 'O nome deve ter 2 ou mais caracteres'
+        },
+      ];
 
 const items = ref([]);
 

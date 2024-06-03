@@ -1,6 +1,6 @@
 <template>
     <v-app dark="true">
-        <v-navigation-drawer v-model="drawer" :clipped="clipped" temporary location="left">
+        <v-navigation-drawer v-model="drawer" :clipped="clipped" temporary location="left" >
             <v-list>
                 <v-list-item v-for="(item, i) in items" :key="i" :value="item" color="primary" :to="item.to" exact>
                     <template v-slot:prepend>
@@ -12,7 +12,7 @@
         </v-navigation-drawer>
         <v-app-bar :clipped-left="clipped" fixed app color="purple-darken-2">
             <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-            <v-toolbar-title @click.prevent="goHome">
+            <v-toolbar-title @click.prevent="goHome" class="cursor-grab">
                 {{ title }}
             </v-toolbar-title>
             <v-spacer />
