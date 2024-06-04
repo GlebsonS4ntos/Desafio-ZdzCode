@@ -9,7 +9,7 @@
                 <v-col cols="12" md="9">
                     <div class="mb-4 d-flex justify-space-between">
                         <span>{{ produto.name }} -- {{ produto.categoryName }}</span>
-                        <v-icon icon="mdi-delete-circle" color="error" size="large"></v-icon>
+                        <v-icon icon="mdi-delete-circle" color="error" size="large" @click="deletarProduto(produto.id)"></v-icon>
                     </div>
                     <div>
                         {{ produto.description }}
@@ -36,6 +36,19 @@ const prop = defineProps({
         required: true
     }
 })
+
+const deletarProduto = async (id) => {
+    try {
+        const response = await fetch('https://localhost:44350/api/products/' + id, {
+            method: 'DELETE'
+        });
+    }
+    catch {
+        console.log('Deu ruim');
+    }
+
+    buscarCategorias();
+}
 </script>
 
 <style></style>
