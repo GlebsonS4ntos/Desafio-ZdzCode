@@ -38,7 +38,7 @@ const isValid = () => {
 
 const name = [
         value => {
-          if (name.length > 2) return true
+          if (value.length > 2) return true
           return 'O nome deve ter 2 ou mais caracteres'
         },
       ];
