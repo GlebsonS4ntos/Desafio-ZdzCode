@@ -18,7 +18,7 @@
                 <td>{{ item.partentCategoryName }}</td>
                 <td>
                     <v-icon icon="mdi-delete-circle" color="error" size="large" @click="deletarCategoria(item.id)" class="mr-4"></v-icon>
-                    <v-icon icon="mdi-pencil-circle" color="primary" size="large" @click="id = item.id"></v-icon>
+                    <v-icon icon="mdi-pencil-circle" color="primary" size="large" @click="id = item.id, dialogAtualizar = !dialogAtualizar"></v-icon>
                 </td>
             </tr>
         </tbody>
@@ -28,11 +28,13 @@
 <script setup>
 const items = ref([]);
 
-const prop = defineProps({ atualizarTabela: Boolean, idCategoriaAtualizar: String });
+const prop = defineProps({ atualizarTabela: Boolean, idCategoriaAtualizar: String, dialogAtualizar: Boolean });
 
 const id = ref(prop.idCategoriaAtualizar);
 
-const emit = defineEmits(['update:idCategoriaAtualizar']);
+const dialogAtualizar = ref(prop.dialogAtualizar);
+
+const emit = defineEmits(['update:idCategoriaAtualizar'], ['update:dialogAtualizar']);
 
 watch(() => prop.atualizarTabela, (newVal) => {
     if (newVal == true) {
@@ -46,6 +48,14 @@ watch(() => prop.idCategoriaAtualizar, (newVal) => {
 
 watch(id, (newVal) => {
     emit('update:idCategoriaAtualizar', newVal)
+})
+
+watch(() => prop.dialogAtualizar, (newVal) => {
+    dialogAtualizar.value = newVal
+})
+
+watch(dialogAtualizar, (newVal) => {
+    emit('update:dialogAtualizar', newVal)
 })
 
 const buscarCategorias = async () => { 

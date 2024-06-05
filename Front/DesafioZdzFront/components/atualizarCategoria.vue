@@ -29,13 +29,15 @@
     partentCategoryId: ""
   });
   
-  const props = defineProps({ dialogAtualizar: Boolean, idCategoriaAtualizar: String })
+  const props = defineProps({ dialogAtualizar: Boolean, idCategoriaAtualizar: String, atualizarTabela : Boolean })
 
   const idCategoriaAtualizar = ref(props.idCategoriaAtualizar);
 
-  const emit = defineEmits(['update:dialogAtualizar']) 
+  const emit = defineEmits(['update:dialogAtualizar'], ['update:atualizarTabela']) 
 
   const internalDialog = ref(props.dialogAtualizar)
+
+  const atualizarTabela = ref(props.atualizarTabela)
 
   const items = ref([]);
 
@@ -64,8 +66,15 @@
   watch(idCategoriaAtualizar, async (newVal) => {
     if(newVal != "") {
       await buscarCategoriaById(newVal)
-      internalDialog.value = true
     }
+  })
+
+  watch(() => props.atualizarTabela, (newVal) => {
+    atualizarTabela.value = newVal
+  })
+
+  watch(atualizarTabela, (newVal) => {
+    emit('update:atualizarTabela', newVal)
   })
 
   const closeDialog = () => { 
@@ -99,6 +108,7 @@
       console.log('Deu ruim');
     }
   
+    atualizarTabela.value = true;
     internalDialog.value = false;
     emit('update:dialogAtualizar', internalDialog.value);
     categoria.name = "";

@@ -3,9 +3,9 @@
     <h1 class="me-6">Categorias</h1>
     <v-icon color="green-darken-2" size="large" @click="dialogAdicionar = !dialogAdicionar">mdi-plus-circle</v-icon>
   </div>
-  <TabelaCategorias v-model:atualizarTabela="atualizarTabela" v-model:idCategoriaAtualizar="idCategoriaAtualizar"/>
+  <TabelaCategorias v-model:atualizarTabela="atualizarTabela" v-model:idCategoriaAtualizar="idCategoriaAtualizar" v-model:dialogAtualizar="dialogAtualizar"/>
   <CadastroCategorias v-model:dialogAdicionar="dialogAdicionar" v-model:atualizarTabela="atualizarTabela"/>
-  <AtualizarCategoria v-model:dialogAtualizar="dialogAtualizar" v-model:idCategoriaAtualizar="idCategoriaAtualizar"/>
+  <AtualizarCategoria v-model:dialogAtualizar="dialogAtualizar" v-model:idCategoriaAtualizar="idCategoriaAtualizar" v-model:atualizarTabela="atualizarTabela"/>
 </template>
 
 <script>
