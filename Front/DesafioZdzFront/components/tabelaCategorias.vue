@@ -30,6 +30,8 @@ const items = ref([]);
 
 const prop = defineProps({ atualizarTabela: Boolean, idCategoriaAtualizar: String, dialogAtualizar: Boolean });
 
+const atualizarTabela = ref(prop.atualizarTabela);
+
 const id = ref(prop.idCategoriaAtualizar);
 
 const dialogAtualizar = ref(prop.dialogAtualizar);
@@ -37,8 +39,14 @@ const dialogAtualizar = ref(prop.dialogAtualizar);
 const emit = defineEmits(['update:idCategoriaAtualizar','update:dialogAtualizar']);
 
 watch(() => prop.atualizarTabela, (newVal) => {
-    if (newVal == true) {
-        buscarCategorias();
+    atualizarTabela.value = newVal
+})
+
+watch(atualizarTabela, async (newVal) => {
+    emit('update:atualizarTabela', newVal)
+    if (newVal) {
+        await buscarCategorias();
+        emit('update:atualizarTabela', false)
     }
 })
 

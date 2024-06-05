@@ -85,11 +85,11 @@
       categoria.partentCategoryId = "";
     }else{
       await buscarCategoriaById(idCategoriaAtualizar.value)
+      await buscarCategorias()
     }
   })
 
-  const saveDialog = async () => { 
-    console.log(idCategoriaAtualizar)
+  const saveDialog = async () => {
     try {
       const response = await fetch('https://localhost:44350/api/categories/' + idCategoriaAtualizar.value, {
         headers: {

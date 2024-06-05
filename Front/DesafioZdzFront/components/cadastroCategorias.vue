@@ -62,7 +62,6 @@ watch(() => props.atualizarTabela, (newVal) => {
 })
 
 watch(atualizarTabela, (newVal) => {
-  console.log(newVal)
   emit('update:atualizarTabela', newVal)
 })
 
@@ -95,11 +94,14 @@ const saveDialog = async () => { //Cadastrar
   buscarCategorias();
 }
 
-watch(internalDialog, (newVal) => { //Watch para monitorar o valor da variavel interna e alterar a propriedade na pagina de categorias 
+watch(internalDialog, async (newVal) => { //Watch para monitorar o valor da variavel interna e alterar a propriedade na pagina de categorias 
   emit('update:dialogAdicionar', newVal)
   if (newVal === false) {
     categoria.name = "";
     categoria.partentCategoryId = null;
+  }
+  else {
+    await buscarCategorias();
   }
 })
 
