@@ -47,7 +47,7 @@ const items = ref([]);
 
 const props = defineProps({ dialogAdicionar: Boolean, atualizarTabela: Boolean }) //Propriedade que vai vir do componente 
 
-const emit = defineEmits(['update:dialogAdicionar'], ['update:atualizarTabela']) //Emite o update pro componente pai
+const emit = defineEmits(['update:dialogAdicionar','update:atualizarTabela']) //Emite o update pro componente pai
 
 const internalDialog = ref(props.dialogAdicionar) //Variavel interna que vai receber o valor da propriedade e vai ser usada pra abrir/fechar o modal
 

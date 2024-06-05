@@ -59,14 +59,8 @@
     internalDialog.value = newVal
   })
   
-  watch(() => props.idCategoriaAtualizar, async (newVal) => {
+  watch(() => props.idCategoriaAtualizar, (newVal) => {
     idCategoriaAtualizar.value = newVal
-  })
-
-  watch(idCategoriaAtualizar, async (newVal) => {
-    if(newVal != "") {
-      await buscarCategoriaById(newVal)
-    }
   })
 
   watch(() => props.atualizarTabela, (newVal) => {
@@ -84,11 +78,13 @@
     categoria.partentCategoryId = "";
   }
   
-  watch(internalDialog, (newVal) => { 
+  watch(internalDialog, async (newVal) => { 
     emit('update:dialogAtualizar', newVal)
     if (newVal === false) {
       categoria.name = "";
       categoria.partentCategoryId = "";
+    }else{
+      await buscarCategoriaById(idCategoriaAtualizar.value)
     }
   })
 
