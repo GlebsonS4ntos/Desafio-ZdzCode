@@ -2,12 +2,12 @@
   <div class="d-flex align-md-center mb-12">
     <h1 class="me-6">Produtos</h1>
     <v-icon color="green-darken-2" size="large" @click="dialog = !dialog"> mdi-plus-circle </v-icon>
-    <CadastroProdutos v-model:dialog="dialog" />
+    <CadastroProdutos v-model:dialog="dialog" v-model:atualizarCards="atualizarCards"/>
   </div>
   <v-container>
     <v-row dense>
       <v-col cols="12" md="4" v-for="item in items">
-        <CardProduto :produto="item" />
+        <CardProduto :produto="item" v-model:atualizarCards="atualizarCards"/>
       </v-col>
     </v-row>
   </v-container>
@@ -26,7 +26,8 @@ export default {
     return {
       dialog: false,
       items: [],
-      categoria: Object
+      categoria: Object,
+      atualizarCards : false
     }
   },
   methods: {
@@ -53,6 +54,14 @@ export default {
       }
       catch {
         console.log('Deu ruim');
+      }
+    }
+  },
+  watch: {
+    atualizarCards(newVal) {
+      if (newVal) {
+        this.buscarProdutos();
+        this.atualizarCards = false
       }
     }
   },

@@ -34,7 +34,7 @@
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue'
 
-const prop = defineProps({ dialog: Boolean });
+const prop = defineProps({ dialog: Boolean, atualizarCards: Boolean });
 
 const produto = reactive({
   id: null,
@@ -48,7 +48,7 @@ const produto = reactive({
 
 const internalDialog = ref(prop.dialog);
 
-const emit = defineEmits(['update:dialog']);
+const emit = defineEmits(['update:dialog', 'update:atualizarCards']);	
 
 const categorias = ref([]);
 
@@ -102,6 +102,7 @@ const saveDialog = async () => { //Cadastrar
   }
 
   internalDialog.value = false;
+  emit('update:atualizarCards', true);
 }
 
 const isValid = () => {

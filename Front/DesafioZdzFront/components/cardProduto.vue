@@ -34,8 +34,11 @@ const prop = defineProps({
     produto: {
         type: Object,
         required: true
-    }
+    },
+    atualizarCards : Boolean
 })
+
+const emit = defineEmits(['update:atualizarCards'])
 
 const deletarProduto = async (id) => {
     try {
@@ -47,7 +50,7 @@ const deletarProduto = async (id) => {
         console.log('Deu ruim');
     }
 
-    buscarCategorias();
+    emit('update:atualizarCards', true);
 }
 </script>
 
