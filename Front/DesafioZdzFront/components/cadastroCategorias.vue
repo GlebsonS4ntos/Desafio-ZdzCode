@@ -26,7 +26,7 @@ import { ref, reactive, watch, onMounted } from 'vue'
 const categoria = reactive({
   id: null,
   name: "",
-  partentCategoryId: ""
+  partentCategoryId: null
 });
 
 const isValid = () => {
@@ -38,28 +38,39 @@ const isValid = () => {
 
 const name = [
         value => {
-          if (value.length > 2) return true
+          if (value.length >= 2) return true
           return 'O nome deve ter 2 ou mais caracteres'
         },
       ];
 
 const items = ref([]);
 
-const props = defineProps({ dialog: Boolean }) //Propriedade que vai vir do componente 
+const props = defineProps({ dialogAdicionar: Boolean, atualizarTabela: Boolean }) //Propriedade que vai vir do componente 
 
-const emit = defineEmits(['update:dialog']) //Emite o update pro componente pai
+const emit = defineEmits(['update:dialogAdicionar'], ['update:atualizarTabela']) //Emite o update pro componente pai
 
-const internalDialog = ref(props.dialog) //Variavel interna que vai receber o valor da propriedade e vai ser usada pra abrir/fechar o modal
+const internalDialog = ref(props.dialogAdicionar) //Variavel interna que vai receber o valor da propriedade e vai ser usada pra abrir/fechar o modal
 
-watch(() => props.dialog, (newVal) => { //Watch para monitorar o valor da propriedade e alterar a variavel interna
+const atualizarTabela = ref(props.atualizarTabela)
+
+watch(() => props.dialogAdicionar, (newVal) => { //Watch para monitorar o valor da propriedade e alterar a variavel interna
   internalDialog.value = newVal
+})
+
+watch(() => props.atualizarTabela, (newVal) => {
+  atualizarTabela.value = newVal
+})
+
+watch(atualizarTabela, (newVal) => {
+  console.log(newVal)
+  emit('update:atualizarTabela', newVal)
 })
 
 const closeDialog = () => { //Fechar o modal
   internalDialog.value = false
-  emit('update:dialog', internalDialog.value)
+  emit('update:dialogAdicionar', internalDialog.value)
   categoria.name = "";
-  categoria.partentCategoryId = "";
+  categoria.partentCategoryId = null;
 }
 
 const saveDialog = async () => { //Cadastrar
@@ -76,18 +87,19 @@ const saveDialog = async () => { //Cadastrar
     console.log('Deu ruim');
   }
 
+  atualizarTabela.value = true;
   internalDialog.value = false;
-  emit('update:dialog', internalDialog.value);
+  emit('update:dialogAdicionar', internalDialog.value);
   categoria.name = "";
-  categoria.partentCategoryId = "";
+  categoria.partentCategoryId = null;
   buscarCategorias();
 }
 
 watch(internalDialog, (newVal) => { //Watch para monitorar o valor da variavel interna e alterar a propriedade na pagina de categorias 
-  emit('update:dialog', newVal)
+  emit('update:dialogAdicionar', newVal)
   if (newVal === false) {
     categoria.name = "";
-    categoria.partentCategoryId = "";
+    categoria.partentCategoryId = null;
   }
 })
 

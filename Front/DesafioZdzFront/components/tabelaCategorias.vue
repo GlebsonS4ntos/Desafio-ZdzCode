@@ -17,7 +17,8 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.partentCategoryName }}</td>
                 <td>
-                    <v-icon icon="mdi-delete-circle" color="error" size="large" @click="deletarCategoria(item.id)"></v-icon>
+                    <v-icon icon="mdi-delete-circle" color="error" size="large" @click="deletarCategoria(item.id)" class="mr-4"></v-icon>
+                    <v-icon icon="mdi-pencil-circle" color="primary" size="large" @click="id = item.id"></v-icon>
                 </td>
             </tr>
         </tbody>
@@ -25,16 +26,33 @@
 </template>
 
 <script setup>
-
 const items = ref([]);
+
+const prop = defineProps({ atualizarTabela: Boolean, idCategoriaAtualizar: String });
+
+const id = ref(prop.idCategoriaAtualizar);
+
+const emit = defineEmits(['update:idCategoriaAtualizar']);
+
+watch(() => prop.atualizarTabela, (newVal) => {
+    if (newVal == true) {
+        buscarCategorias();
+    }
+})
+
+watch(() => prop.idCategoriaAtualizar, (newVal) => {
+    id.value = newVal
+})
+
+watch(id, (newVal) => {
+    emit('update:idCategoriaAtualizar', newVal)
+})
 
 const buscarCategorias = async () => { 
     try {
         const response = await fetch('https://localhost:44350/api/categories');
         const data = await response.json();
         items.value = await Promise.all(data.map(async (item) => {
-            /*Percore o resultado da api e pega o id da categoria pai se tiver, faz uma busca pelo id e retorna o nome e atribui o 
-            resultado a uma nova propriedade do objeto, se n tiver coloca uma string padrao nessa nova propriedade*/
             if(item.partentCategoryId != null){
                 item.partentCategoryName = await buscarNameCategoriaById(item.partentCategoryId);
             }
