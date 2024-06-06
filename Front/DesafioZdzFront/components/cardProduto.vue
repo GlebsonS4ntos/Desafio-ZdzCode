@@ -20,8 +20,7 @@
                     <div>
                         Preço: R$ {{ produto.price }}
                     </div>
-                    <v-btn class="text-none mt-3" color="info" rounded="0" variant="flat" block text="EDITAR">
-                        
+                    <v-btn class="text-none mt-3" color="info" rounded="0" variant="flat" block text="EDITAR" @click="editarProduto(produto.id)">        
                     </v-btn>
                 </v-col>
             </v-row>
@@ -35,10 +34,22 @@ const prop = defineProps({
         type: Object,
         required: true
     },
-    atualizarCards : Boolean
+    atualizarCards : Boolean,
+    idProductAtualizar : String,
+    dialogAtualizar : Boolean
 })
 
-const emit = defineEmits(['update:atualizarCards'])
+const idProductAtualizar = ref(prop.idProductAtualizar);
+
+const emit = defineEmits(['update:atualizarCards'], ['update:idProductAtualizar'], ['update:dialogAtualizar']);
+
+watch(() => prop.idProductAtualizar, (newVal) => {
+    idProductAtualizar.value = newVal
+});
+
+watch(idProductAtualizar, (newVal) => {
+    emit('update:idProductAtualizar', newVal)
+});
 
 const deletarProduto = async (id) => {
     try {
@@ -51,6 +62,11 @@ const deletarProduto = async (id) => {
     }
 
     emit('update:atualizarCards', true);
+}
+
+const editarProduto = (id) => {
+    idProductAtualizar.value = id; 
+    emit('update:dialogAtualizar', true)
 }
 </script>
 

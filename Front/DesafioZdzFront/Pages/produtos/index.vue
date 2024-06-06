@@ -1,33 +1,37 @@
 <template>
   <div class="d-flex align-md-center mb-12">
     <h1 class="me-6">Produtos</h1>
-    <v-icon color="green-darken-2" size="large" @click="dialog = !dialog"> mdi-plus-circle </v-icon>
-    <CadastroProdutos v-model:dialog="dialog" v-model:atualizarCards="atualizarCards"/>
+    <v-icon color="green-darken-2" size="large" @click="dialogAdicionar = !dialogAdicionar"> mdi-plus-circle </v-icon>
+    <CadastroProdutos v-model:dialogAdicionar="dialogAdicionar" v-model:atualizarCards="atualizarCards"/>
   </div>
   <v-container>
     <v-row dense>
       <v-col cols="12" md="4" v-for="item in items">
-        <CardProduto :produto="item" v-model:atualizarCards="atualizarCards"/>
+        <CardProduto :produto="item" v-model:atualizarCards="atualizarCards" v-model:idProductAtualizar="idProductAtualizar" v-model:dialogAtualizar="dialogAtualizar"/>
       </v-col>
     </v-row>
   </v-container>
+  <AtualizarProduto v-model:dialogAtualizar="dialogAtualizar" v-model:idProductAtualizar="idProductAtualizar" v-model:atualizarCards="atualizarCards"/>
 </template>
 
 <script>
+import AtualizarProduto from '~/components/atualizarProduto.vue';
 import CadastroProdutos from '~/components/cadastroProdutos.vue'
 import CardProduto from '~/components/cardProduto.vue'
 
 export default {
   components: {
     CadastroProdutos,
-    CardProduto
+    CardProduto, 
+    AtualizarProduto
   },
   data() {
     return {
-      dialog: false,
+      dialogAtualizar: false,
+      dialogAdicionar: false,
       items: [],
-      categoria: Object,
-      atualizarCards : false
+      atualizarCards : false,
+      idProductAtualizar: null
     }
   },
   methods: {

@@ -34,7 +34,7 @@
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue'
 
-const prop = defineProps({ dialog: Boolean, atualizarCards: Boolean });
+const prop = defineProps({ dialogAdicionar: Boolean, atualizarCards: Boolean });
 
 const produto = reactive({
   id: null,
@@ -46,18 +46,18 @@ const produto = reactive({
   categoryId: ""
 });
 
-const internalDialog = ref(prop.dialog);
+const internalDialog = ref(prop.dialogAdicionar);
 
-const emit = defineEmits(['update:dialog', 'update:atualizarCards']);	
+const emit = defineEmits(['update:dialogAdicionar', 'update:atualizarCards']);	
 
 const categorias = ref([]);
 
-watch(() => prop.dialog, (newVal) => {
+watch(() => prop.dialogAdicionar, (newVal) => {
   internalDialog.value = newVal
 });
 
 watch(internalDialog, (newVal) => {
-  emit('update:dialog', newVal)
+  emit('update:dialogAdicionar', newVal)
   if (newVal === false) {
     produto.name = "";
     produto.description = "";
